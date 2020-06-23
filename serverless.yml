@@ -11,10 +11,16 @@ provider:
   memorySize: 256
   stage: ${opt:stage, 'dev'}
   region: ap-south-1
+
   environment:
     AUCTIONS_TABLE_NAME: ${self:custom.AuctionsTable.name}
   iamRoleStatements:
     - ${file(iam/AuctionsTableIAM.yaml):AuctionsTableIAM}
+    - Effect: 'Allow'
+      Action:
+        - 'ses:*'
+      Resource:
+        - '*'
 
 resources:
   Resources:
@@ -53,6 +59,10 @@ functions:
     handler: src/handlers/processAuctions.handler
     # events:
     #   - schedule: rate(1 minute)
+  sendRemainderDaily:
+    handler: src/handlers/sendRemainderDaily.handler
+    events:
+      - schedule: rate(1 day)
 custom:
   AuctionsTable:
     name: !Ref AuctionsTable

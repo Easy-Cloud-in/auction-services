@@ -9,6 +9,7 @@ const SES = new AWS.SES();
 // const fs = require("fs");
 
 const toAndFromAddress = "sakar.sr@gmail.com";
+
 const htmlBody = `
     <!DOCTYPE html>
     <html>
@@ -18,14 +19,14 @@ const htmlBody = `
   `;
 
 async function sendRemainderDaily(event, context) {
-  //   let emailHTML;
-  //   try {
-  //     emailHTML = await readContentFile("./mail.html");
-  //     // emailHTML = await fs.readFileSync("../lib/mail.html", "utf-8");
-  //   } catch (error) {
-  //     console.log("File Not Found!");
-  //     throw new createError.NotFound("File Not Found!");
-  //   }
+  // let emailHTML;
+  // try {
+  //   emailHTML = await readContentFile("./html/mail.html");
+  //   // emailHTML = await fs.readFileSync("../lib/mail.html", "utf-8");
+  // } catch (error) {
+  //   console.log("File Not Found!");
+  //   throw new createError.NotFound("File Not Found!");
+  // }
 
   const params = {
     Destination: {

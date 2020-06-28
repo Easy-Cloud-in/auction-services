@@ -33,3 +33,5 @@ sls logs -f <functionName> --startTime 1m
 sls logs -f processAuctions
 
 sls logs -f processAuctions -t
+
+sls invoke -f <functionName> -l

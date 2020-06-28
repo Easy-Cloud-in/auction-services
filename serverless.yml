@@ -13,6 +13,7 @@ provider:
   region: ap-south-1
 
   environment:
+    CLIENT_ID: '2jr56qs4jaf6gkkkeuaoit3rgc'
     AUCTIONS_TABLE_NAME: ${self:custom.AuctionsTable.name}
   iamRoleStatements:
     - ${file(iam/AuctionsTableIAM.yaml):AuctionsTableIAM}
@@ -27,6 +28,20 @@ resources:
     AuctionsTable: ${file(resources/AuctionsTable.yaml):AuctionsTable}
 
 functions:
+  createNewUser:
+    handler: src/handlers/createNewUser.handler
+    events:
+      - http:
+          method: POST
+          path: /user
+          cors: true
+  confirmNewUser:
+    handler: src/handlers/confirmNewUser.handler
+    events:
+      - http:
+          method: POST
+          path: /confirmuser
+          cors: true
   createAuction:
     handler: src/handlers/createAuction.handler
     events:
@@ -62,10 +77,14 @@ functions:
   sendRemainderDaily:
     handler: src/handlers/sendRemainderDaily.handler
     events:
-      - schedule: rate(1 day)
+      # - schedule: rate(1 day)
+
 custom:
   AuctionsTable:
     name: !Ref AuctionsTable
     arn: !GetAtt AuctionsTable.Arn
   bundel:
     linting: false
+  # copyFiles: # Copy any additional files to the generated package
+  #   - from: 'src/lib/mail.html' # Where the files are currently
+  #     to: './html/' # Where in the package should they go

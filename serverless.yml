@@ -35,6 +35,14 @@ functions:
           method: POST
           path: /user
           cors: true
+  sendConfirmationCode:
+    handler: src/handlers/sendConfirmationCode.handler
+    events:
+      - cognitoUserPool:
+          pool: 'EC-Newsletter-Subscription'
+          trigger: CustomMessage
+          existing: true
+
   confirmNewUser:
     handler: src/handlers/confirmNewUser.handler
     events:

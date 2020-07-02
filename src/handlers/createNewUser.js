@@ -23,8 +23,18 @@ async function createNewUser(event, context) {
     ],
   };
   let newUser;
+  // let confirmationCode;
   try {
     newUser = await cognito.signUp(params).promise();
+    // if (newUser) {
+    //   const params = {
+    //     AccessToken: newUser.UserSub,
+    //     Username: newUser.email,
+    //   };
+    //   confirmationCode = await cognito
+    //     .getUserAttributeVerificationCode(params)
+    //     .promise();
+    // }
   } catch (error) {
     console.error(error);
     throw new createError.InternalServerError(error);
